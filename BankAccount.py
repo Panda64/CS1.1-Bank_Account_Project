@@ -15,12 +15,12 @@ class BankAccount:
     balance = 0
 
     def deposit(self, amount):
-        balance += amount
+        self.balance += amount
 
         print(f"Amount Deposited: ${amount}")
 
     def withdrawl(self, amount):
-        if amount > balance:
+        if amount > self.balance:
             print("Insufficient funds. You will be charged a $10 overdraft fee if you withdraw this amount. \
                    Do you wish to continue? (y/n) ")
             
@@ -30,7 +30,7 @@ class BankAccount:
                 user_input = input()
 
                 if user_input == 'y' or user_input == 'Y':
-                    balance -= (amount + 10)
+                    self.balance -= (amount + 10)
                     print(f"Withdraw confirmed, you will be charged a $10 overdraft fee. Amount Withdrawn: ${amount}")
                     retry = False
                 elif user_input == 'n' or user_input == 'N':
@@ -39,15 +39,15 @@ class BankAccount:
                 else:
                     print("Please type either 'y' or 'n'. Try again.")
         else:
-            balance -= amount
+            self.balance -= amount
 
     def get_balance(self):
-        print(f"Your current account balance is ${balance}")
+        print(f"Your current account balance is ${self.balance}")
 
-        return balance
+        return self.balance
 
     def add_monthly_interest(self):
-        interest = balance *  0.00083
-        balance += interest
+        interest = self.balance *  0.00083
+        self.balance += interest
 
     
