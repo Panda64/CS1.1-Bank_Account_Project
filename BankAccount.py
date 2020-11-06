@@ -6,6 +6,9 @@ def random_bank_account_number():
     
     return num_with_zeros
 
+def hide_account_number(number):
+    return "****" + number[4:]
+
 class BankAccount:
     def __init__(self, full_name):
         self.full_name = full_name
@@ -18,6 +21,8 @@ class BankAccount:
         amount = float(amount)
 
         self.balance += amount
+
+        amount = "{:.2f}".format(amount)
 
         print(f"Amount Deposited: ${amount}")
 
@@ -35,29 +40,52 @@ Do you wish to continue? (y/n) ")
 
                 if user_input == 'y' or user_input == 'Y':
                     self.balance -= (amount + 10)
+
+                    amount = "{:.2f}".format(amount)
+
                     print(f"Withdraw confirmed, you have been charged a $10 overdraft fee. Amount Withdrawn: ${amount}")
+
                     retry = False
                 elif user_input == 'n' or user_input == 'N':
-                    "Withdraw canceled."
+                    print("Withdrawl canceled.")
+
                     retry = False
                 else:
-                    print("Please type either 'y' or 'n'. Try again.")
+                    print("Please type either 'y' or 'n'. Try again.")    
         else:
             self.balance -= amount
+
+            amount = "{:.2f}".format(amount)
+
             print(f"Amount Withdrawn: ${amount}")
 
     def get_balance(self):
         if  self.balance >= 0:
-            print(f"Your current account balance is ${self.balance}")
+            balance_display= "{:.2f}".format(self.balance)
+            print(f"Your current account balance is ${balance_display}")
         else:
-            self.balance = self.balance * -1
-            print(f"Your current account balance is -${self.balance}")
+            positive_balance = self.balance * -1
+            balance_display = "{:.2f}".format(positive_balance)
+            print(f"Your current account balance is -${balance_display}")
 
         return self.balance
 
     def add_monthly_interest(self):
         interest = self.balance *  0.00083
         self.balance += interest
+
+    def print_receipt(self):
+        print(f" {self.full_name} \n \
+Account No.: {hide_account_number(self.account_number)} \n \
+Routing No.: {self.routing_number}")
+
+        if self.balance >= 0:
+            balance_display = "{:.2f}".format(self.balance)
+            print(f" Balance: ${balance_display}")
+        else:
+            positive_balance = self.balance * -1
+            balance_display = "{:.2f}".format(positive_balance)
+            print(f" Balance: -${balance_display}")
 
 
 restart = True
@@ -89,6 +117,9 @@ while restart:
     def add_monthly_interest():
         account.add_monthly_interest()
 
+    def print_receipt():
+        account.print_receipt()
+
     menu = True
 
     while menu:
@@ -109,6 +140,8 @@ while restart:
             withdrawl()
         elif user_choice == "3":
             get_balance()
+        elif user_choice == "4":
+            print_receipt()
         elif user_choice == "5":
             add_monthly_interest()
         elif user_choice == "6":
