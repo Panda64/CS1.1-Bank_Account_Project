@@ -1,13 +1,17 @@
 import random
 
+# Function that generates a random 8-digit bank account number. Code is set up so that any number from 00000001 - 99999999 can 
+# be displayed
 def random_bank_account_number():
     num = random.randrange(1, 10000**2)
     num_with_zeros = '{:08}'.format(num)
     
     return num_with_zeros
 
+# Function for hiding the first four digits of the bank account number (for simulated secruity purposes)
 def hide_account_number(number):
     return "****" + number[4:]
+
 
 class BankAccount:
     def __init__(self, full_name):
@@ -22,6 +26,8 @@ class BankAccount:
 
         self.balance += amount
 
+        # Formatting the number so that only two decimal places are displayed at all times. This has been done multiple times
+        # throughout this class
         amount = "{:.2f}".format(amount)
 
         print(f"Amount Deposited: ${amount}")
@@ -29,6 +35,8 @@ class BankAccount:
     def withdrawl(self, amount):
         amount = float(amount)
 
+        # If the user tries to withdrawl an amount that is more than their current available balance, they will be prompted
+        # for confirmation and informed that they will be charged a $10 overdraft fee
         if amount > self.balance:
             print("Insufficient funds. You will be charged a $10 overdraft fee if you withdraw this amount. \
 Do you wish to continue? (y/n) ")
@@ -59,6 +67,9 @@ Do you wish to continue? (y/n) ")
 
             print(f"Amount Withdrawn: ${amount}")
 
+    # Method for displaying the users current available balance. The following code ensures that if the users current available
+    # balance is negative, it will proberly display the negative sign before the "$" symbol, not after. This is also done at 
+    # the print_receipt method further down in this class
     def get_balance(self):
         if  self.balance >= 0:
             balance_display= "{:.2f}".format(self.balance)
@@ -73,6 +84,7 @@ Do you wish to continue? (y/n) ")
     def add_monthly_interest(self):
         interest = self.balance *  0.00083
         self.balance += interest
+        print("1 month of interest has been added to your account.")
 
     def print_receipt(self):
         print(f" {self.full_name} \n \
@@ -88,6 +100,8 @@ Routing No.: {self.routing_number}")
             print(f" Balance: -${balance_display}")
 
 
+# Instead of creating the three different object examples to test the methods and attributes, I created an interactive menu to 
+# easily test everything from within the terminal
 restart = True
 
 while restart:
