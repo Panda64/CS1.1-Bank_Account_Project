@@ -16,10 +16,10 @@ def hide_account_number(number):
 class BankAccount:
     def __init__(self, full_name):
         self.full_name = full_name
+        self.balance = 0
+        self.account_number = random_bank_account_number()
 
-    account_number = random_bank_account_number()
     routing_number = 123456789
-    balance = 0
 
     def deposit(self, amount):
         amount = float(amount)
